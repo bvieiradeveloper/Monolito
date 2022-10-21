@@ -29,4 +29,5 @@ const MockRepository = () => {
             expect(result.purchasePrice).toBe(input.purchasePrice);
             expect(result.stock).toBe(input.stock);
         })
+        
 });
