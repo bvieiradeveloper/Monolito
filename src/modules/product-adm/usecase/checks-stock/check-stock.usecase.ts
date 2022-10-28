@@ -11,8 +11,6 @@ export default class CheckStockUseCase{
     async execute(input:CheckStockInputDto): Promise<CheckStockOutputDto>{
 
         const product = await this.repository.find(input.productId);
-
-        console.log(product.id.id);
         return {
             productId: product.id.id,
             stock: product.stock,
