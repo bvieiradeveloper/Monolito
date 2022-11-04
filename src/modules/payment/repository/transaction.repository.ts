@@ -1,3 +1,4 @@
+
 import transaction from '../domain/transaction';
 import PaymentGateway from '../gateway/payment.gateway';
 import TransactionModel from './transaction.model';
