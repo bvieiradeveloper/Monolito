@@ -8,9 +8,14 @@ import Id from "../../../@shared/domain/value-object/id.value-object";
 
 export default class GenerateInvoiceUseCase implements UseCaseInterface{
 
-    constructor(private invoiceRepository: InvoiceGateway) { }
+    private _invoiceRepository: InvoiceGateway
+    constructor(invoiceRepository: InvoiceGateway) 
+    {
+        this._invoiceRepository = invoiceRepository;
+    }
     async execute(input: GenerateInvoiceUseCaseInputDto): Promise<GenerateInvoiceUseCaseOutputDto> {
         const invoice = new Invoice({
+            id: new Id(input.id) || new Id(),
             name : input.name,
             document: input.document,
             address: new Address({
@@ -29,8 +34,8 @@ export default class GenerateInvoiceUseCase implements UseCaseInterface{
 
         })
 
-        this.invoiceRepository.generate(invoice);
-
+        await this._invoiceRepository.generate(invoice);
+        
         return {
             id: invoice.id.id,
             name: invoice.name,

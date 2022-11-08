@@ -7,34 +7,35 @@ import Product from '../domain/entity/product';
 import Address from '../domain/value-object/address.value-object';
 export default class InvoiceRepository implements InvoiceGateway{
     async generate(entity: Invoice): Promise<void> {
-      await InvoiceModel.create(
-        {
-          id: entity.id.id,
-          name: entity.name,
-          document: entity.document,
-          street: entity.address.street,
-          number: entity.address.number,
-          complement: entity.address.complement,
-          city: entity.address.city,
-          state: entity.address.state,
-          zipCode: entity.address.zipCode,
-          items: entity.items.map((item) => ({
-            id: item.id.id,
-            name: item.name,
-            price: item.price,
-            createdAt: item.createdAt,
-            updatedAt: item.updatedAt,
-          })),
-        },
-        {
-          include: [{ model: ProductModel }],
-        }
-      );
+
+        await InvoiceModel.create(
+          {
+            id: entity.id.id,
+            name: entity.name,
+            document: entity.document,
+            street: entity.address.street,
+            number: entity.address.number,
+            complement: entity.address.complement,
+            city: entity.address.city,
+            state: entity.address.state,
+            zipCode: entity.address.zipCode,
+            items: entity.items.map((item) => ({
+              id: item.id.id,
+              name: item.name,
+              price: item.price,
+              createdAt: item.createdAt,
+              updatedAt: item.updatedAt,
+            })),
+          },
+          {
+            include: [{ model: ProductModel }],
+          }
+        );
     }
 
     async find(id: string): Promise<Invoice> {
       const result = await InvoiceModel.findOne({
-        where: {id: "1"},
+        where: {id: id},
         include: ["items"],
       });
 
@@ -65,5 +66,6 @@ export default class InvoiceRepository implements InvoiceGateway{
     });
 
     return invoice;
+
     }
   }

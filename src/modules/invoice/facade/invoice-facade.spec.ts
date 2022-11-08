@@ -3,12 +3,9 @@ import Id from "../../@shared/domain/value-object/id.value-object";
 import Invoice from "../domain/entity/invoice";
 import Product from "../domain/entity/product";
 import Address from "../domain/value-object/address.value-object";
-import { InvoiceModel } from "./invoice.model";
-
-import InvoiceRepository from "./invoice.repository";
-import { ProductModel } from "./product.model";
-
-
+import { InvoiceModel } from "../repository/invoice.model";
+import { ProductModel } from "../repository/product.model";
+import InvoiceFacadeFactory from '../factory/facade.factory';
 
 const productOne = new Product({
     id : new Id("1"),
@@ -39,8 +36,31 @@ const invoice = new Invoice({
     items: [productOne,productTwo]
 });
 
+const input = {
+    id: "1",
+    name: invoice.name,
+    document: invoice.document,
+    street: invoice.address.street,
+    number: invoice.address.number,
+    complement: invoice.address.complement,
+    city: invoice.address.city,
+    state: invoice.address.state,
+    zipCode: invoice.address.zipCode,
+    items: [
+        {
+            id: productOne.id.id,
+            name: productOne.name,
+            price: productOne.price,  
+        },
+        {
+            id: productTwo.id.id,
+            name: productTwo.name,
+            price: productTwo.price,  
+        },
+    ],
+}
 
-describe("Order repository test", () => {
+describe("Test Invoice Facade",() =>{
     let sequelize: Sequelize;
   
     beforeEach(async () => {
@@ -63,15 +83,13 @@ describe("Order repository test", () => {
     });
 
     it("should create a invoice", async () => {
-        const invoiceRepository = new InvoiceRepository();
 
-        await invoiceRepository.generate(invoice);
+        const invoiceFacade = InvoiceFacadeFactory.create()
 
-        const result = await InvoiceModel.findOne({
-          where: {id: "1"},
-          include: ["items"],
-        });
+        await invoiceFacade.generateInvoice(input);
 
+        const result = await InvoiceModel.findOne({ where: { id: input.id }, include: ["items"] });
+        const t = result.toJSON();
         expect(result.toJSON()).toStrictEqual({
           id: "1",
           name: "Invoice 1",
@@ -100,13 +118,13 @@ describe("Order repository test", () => {
     });
     
     it("should find a invoice", async () => {
-      const invoiceRepository = new InvoiceRepository();
+    const invoiceFacade = InvoiceFacadeFactory.create()
 
-      await invoiceRepository.generate(invoice);
+      await invoiceFacade.generateInvoice(input);
 
-      const result = await invoiceRepository.find("1");
+      const result = await invoiceFacade.findInvoice({id: "1"});
    
-      expect(result.id.id).toEqual("1");
+      expect(result.id).toEqual("1");
       expect(result.name).toEqual("Invoice 1");
       expect(result.document).toEqual("1234567890");
       expect(result.address.street).toEqual("street 1");
@@ -118,13 +136,14 @@ describe("Order repository test", () => {
 
       expect(result.items.length).toBe(2);
 
-      expect(result.items[0].id.id).toEqual("1")
-      expect(result.items[0].name).toEqual("Product 1")
-      expect(result.items[0].price).toEqual(500)
+      expect(result.items[0].id).toEqual("1");
+      expect(result.items[0].name).toEqual("Product 1");
+      expect(result.items[0].price).toEqual(500);
 
+      expect(result.items[1].id).toEqual("2");
+      expect(result.items[1].name).toEqual("Product 2");
+      expect(result.items[1].price).toEqual(750);
 
-      expect(result.items[1].id.id).toEqual("2")
-      expect(result.items[1].name).toEqual("Product 2")
-      expect(result.items[1].price).toEqual(750)
+      expect(result.total).toBe(1250);
     });
-});
+})
