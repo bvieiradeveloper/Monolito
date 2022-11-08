@@ -1,5 +1,4 @@
-import { AllowNull } from 'sequelize-typescript';
-import InvoiceModel from './invoice.model';
+import { AllowNull, BelongsToMany, NotNull } from 'sequelize-typescript';
 import {
     Table,
     Model,
@@ -9,28 +8,26 @@ import {
     BelongsTo,
     HasMany,
   } from "sequelize-typescript";
+import { InvoiceModel } from './invoice.model';
+import Invoice from '../domain/entity/invoice';
 
   
   @Table({
     tableName: "products",
     timestamps: false,
   })
-  export default class ProductModel extends Model {
+  export class ProductModel extends Model {
     @PrimaryKey
     @Column
-    declare id: string;
-    @ForeignKey(() => InvoiceModel)
+    declare  id: string;
     @Column({ allowNull: false })
-    declare invoice_id: string;
-
-    @BelongsTo(() => InvoiceModel)
-    declare invoice: ProductModel;
+    declare  name: string;
     @Column({ allowNull: false })
-    declare name: string;
+    declare  price: number;
     @Column({ allowNull: false })
-    declare price: number;
+    declare  createdAt: Date;
     @Column({ allowNull: false })
-    declare createdAt: Date;
-    @Column({ allowNull: false })
-    declare updatedAt: Date;
+     updatedAt: Date;
+    @BelongsTo(() => InvoiceModel,{ foreignKey: 'invoice_id'})
+    Invoice: InvoiceModel[];
   }
