@@ -1,9 +1,9 @@
-import Id from '../../@shared/domain/value-object/id.value-object';
-import BaseEntity from '../../@shared/domain/entity/base.entity';
-import AggregateRoot from '../../@shared/domain/entity/aggregate-root.inteface';
+import AggregateRoot from "../../@shared/domain/entity/aggregate-root.inteface";
+import BaseEntity from "../../@shared/domain/entity/base.entity";
+import Id from "../../@shared/domain/value-object/id.value-object";
 
 type ClientProps = {
-    id?: Id,
+    Id?: Id,
     name: string,
     email: string,
     document: string;
@@ -13,10 +13,7 @@ type ClientProps = {
     city: string;
     state: string;
     zipCode: string;
-    createdAt?: Date,
-    updatedAt?: Date,
 }
-
 
 export default class Client extends BaseEntity implements AggregateRoot{
 
@@ -31,7 +28,7 @@ export default class Client extends BaseEntity implements AggregateRoot{
     private _zipCode: string;
 
     constructor(props: ClientProps) {
-        super(props.id, props.createdAt, props.updatedAt);
+        super(props.Id);
         this._name = props.name;
         this._email = props.email;
         this._document = props.document;
@@ -40,14 +37,14 @@ export default class Client extends BaseEntity implements AggregateRoot{
         this._complement = props.complement;
         this._city = props.city;
         this._state = props.state;
-        this._zipCode = props.zipCode;       
+        this._zipCode = props.zipCode;   
     }
 
-    get name(): string{
+    get name():string{
         return this._name;
     }
 
-    get email(): string{
+    get email():string{
         return this._email;
     }
 

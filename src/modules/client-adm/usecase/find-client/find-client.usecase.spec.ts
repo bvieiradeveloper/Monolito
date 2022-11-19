@@ -5,7 +5,13 @@ const client = new Client({
     id: new Id("1"),
     name: "Client 1",
     email: "xx@gmil.com",
-    address: "Mr John Smith. 132, My Street, Kingston, New York 12401"
+    document: "0000",
+    street:  "My Street",
+    number:  "132",
+    complement:  "aaaaa",
+    city:  "New York",
+    state:  "Kingston",
+    zipCode:  "12401",
 })
 
 const mockClientRepository = () =>{
@@ -25,6 +31,12 @@ describe("Find client usecase unit test", () => {
         expect(response.id).toEqual("1");
         expect(response.name).toEqual("Client 1");
         expect(response.email).toEqual("xx@gmil.com");
-        expect(response.address).toEqual("Mr John Smith. 132, My Street, Kingston, New York 12401");
+        expect(response.document).toEqual("0000");
+        expect(response.street).toEqual("My Street");
+        expect(response.number).toEqual("132");
+        expect(response.complement).toEqual("aaaaa");
+        expect(response.city).toEqual("New York");
+        expect(response.state).toEqual("Kingston");
+        expect(response.zipCode).toEqual("12401");
     })
 })

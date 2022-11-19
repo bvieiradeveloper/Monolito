@@ -1,7 +1,7 @@
 import ProcessPaymentUseCase from "../usecase/process-payment.usecase";
-import PaymentFacadeInterface from "./facade.interface";
-import PaymentFacade from "./payment.facade";
 import TransactionRepository from '../repository/transaction.repository';
+import PaymentFacadeInterface from "../facade/facade.interface";
+import PaymentFacade from "../facade/payment.facade";
 
 export default class PaymentFacadeFactory {
     static create(): PaymentFacadeInterface {
