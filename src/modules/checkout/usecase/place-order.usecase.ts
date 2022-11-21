@@ -35,10 +35,8 @@ export default class PlaceOrderUseCase implements UseCaseInterface{
         this._paymentFacade = paymentFacade;
     }
     async execute(input: PlaceOrderInputDto): Promise<PlaceOrderOutputDto> {
-        const c = await this._productFacade.checkStock({productId: input.products[0].productId});
         const client = await this._clientFacade.find({clientId: input.clientId });
-       
-      
+
         if(!client){
             throw new Error("Client not found");
         }
