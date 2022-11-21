@@ -20,9 +20,9 @@ export default class PlaceOrderUseCase implements UseCaseInterface{
     private _checkoutRepository: CheckoutGateway;
     private _invoiceFacade: InvoiceFacadeInterface;
     private _paymentFacade: PaymentFacadeInterface;
-    constructor(clientFacade: ClientAdmFacadeInterface,
+    constructor( productFacade: ProductAdmFacadeInterface,
+                clientFacade: ClientAdmFacadeInterface,
                 catalogFacade: StoreCatalogFacadeInterface,
-                productFacade: ProductAdmFacadeInterface,
                 checkoutRepository: CheckoutGateway,
                 invoiceFacade: InvoiceFacadeInterface,
                 paymentFacade: PaymentFacadeInterface)
@@ -35,7 +35,10 @@ export default class PlaceOrderUseCase implements UseCaseInterface{
         this._paymentFacade = paymentFacade;
     }
     async execute(input: PlaceOrderInputDto): Promise<PlaceOrderOutputDto> {
+        const c = await this._productFacade.checkStock({productId: input.products[0].productId});
         const client = await this._clientFacade.find({clientId: input.clientId });
+       
+      
         if(!client){
             throw new Error("Client not found");
         }
@@ -90,6 +93,7 @@ export default class PlaceOrderUseCase implements UseCaseInterface{
         
             payment.status === "approved" && order.approve();
             this._checkoutRepository.addOrder(order);
+            
         return {
             id: order.id.id,
             invoiceId: payment.status === "approved" ? invoice.id : null,

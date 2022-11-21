@@ -4,7 +4,7 @@ import Invoice from "../domain/entity/invoice";
 import Product from "../domain/entity/product";
 import Address from "../domain/value-object/address.value-object";
 import { InvoiceModel } from "../repository/invoice.model";
-import { ProductModel } from "../repository/product.model";
+import { ProductModel } from "../repository/product-invoice.model";
 import InvoiceFacadeFactory from '../factory/facade.factory';
 
 const productOne = new Product({

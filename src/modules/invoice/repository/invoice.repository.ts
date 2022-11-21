@@ -1,6 +1,6 @@
 import Invoice from '../domain/entity/invoice';
 import { InvoiceModel } from './invoice.model';
-import { ProductModel } from './product.model';
+import { ProductModel } from './product-invoice.model';
 import InvoiceGateway from '../gateway/invoice.gateway';
 import Id from '../../@shared/domain/value-object/id.value-object';
 import Product from '../domain/entity/product';

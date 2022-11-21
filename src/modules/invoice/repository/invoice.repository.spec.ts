@@ -6,7 +6,7 @@ import Address from "../domain/value-object/address.value-object";
 import { InvoiceModel } from "./invoice.model";
 
 import InvoiceRepository from "./invoice.repository";
-import { ProductModel } from "./product.model";
+import { ProductInvoiceModel } from "./product-invoice.model";
 
 
 
@@ -53,7 +53,7 @@ describe("Order repository test", () => {
   
       await sequelize.addModels([
         InvoiceModel,
-        ProductModel,
+        ProductInvoiceModel,
       ]);
       await sequelize.sync();
     });

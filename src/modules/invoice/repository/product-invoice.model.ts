@@ -14,7 +14,7 @@ import Invoice from '../domain/entity/invoice';
     tableName: "products",
     timestamps: false,
   })
-  export class ProductModel extends Model {
+  export class ProductInvoiceModel extends Model {
     @PrimaryKey
     @Column
     declare  id: string;
