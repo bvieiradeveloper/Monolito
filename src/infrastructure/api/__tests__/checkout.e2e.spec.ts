@@ -1,6 +1,7 @@
 import { app, sequelize } from "../express";
 import request from "supertest";
-import Id from "../../../modules/@shared/domain/value-object/id.value-object";
+import { ProductCatalogModel } from "../../../modules/store-catalog/repository/product.model";
+
 const mockDate = new Date(2000,1,1);
 describe("E2E test for checkout", () => {
   beforeAll(() => {
@@ -16,9 +17,8 @@ describe("E2E test for checkout", () => {
     jest.useRealTimers();
   });
 
-
-
   it("should checkout", async () => {
+
     const client = await request(app)
       .post("/client")
       .send({
@@ -41,7 +41,7 @@ describe("E2E test for checkout", () => {
         id :  "1",
         name: "Product 1",
         description: "Product",
-        purchasePrice: 10,
+        purchasePrice: 100,
         stock: 10,
         },
     );
@@ -52,10 +52,24 @@ describe("E2E test for checkout", () => {
       id :  "2",
       name: "Product 2",
       description: "Product",
-      purchasePrice: 50,
+      purchasePrice: 200,
       stock: 4,
       },
     );
+
+    await ProductCatalogModel.create({
+      id:"1",
+      name:"Product 1",
+      description: "Product",
+      salesPrice: 100,
+    })
+
+    await ProductCatalogModel.create({
+      id:"2",
+      name:"Product 2",
+      description: "Product",
+      salesPrice: 200,
+    })
 
     const order = await request(app)
     .post("/checkout")

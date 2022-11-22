@@ -12,6 +12,7 @@ import InvoiceFacade from '../../invoice/facade/invoice-facade';
 import PaymentFacade from '../../payment/facade/payment.facade';
 import InvoiceFacadeInterface from '../../invoice/facade/invoice-facade.interface';
 import PaymentFacadeInterface from '../../payment/facade/facade.interface';
+import { ProductModel } from '../../product-adm/repository/product.model';
 export default class PlaceOrderUseCase implements UseCaseInterface{
    
     private _clientFacade: ClientAdmFacadeInterface; 

@@ -1,6 +1,6 @@
 import { app, sequelize } from "../express";
 import request from "supertest";
-import Product from '../../../modules/invoice/domain/entity/product';
+
 
 describe("E2E test for client adm", () => {
   beforeEach(async () => {
@@ -16,6 +16,7 @@ describe("E2E test for client adm", () => {
     const productA = await request(app)
       .post("/product")
       .send({
+        id: "1",
         name: "Product 1",
         description: "Product 1 description",
         purchasePrice: 10,
@@ -26,6 +27,7 @@ describe("E2E test for client adm", () => {
     const productB = await request(app)
     .post("/product")
     .send({
+      id: "2",
       name: "Product 2",
       description: "Product 2 description",
       purchasePrice: 50,

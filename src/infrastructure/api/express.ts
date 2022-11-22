@@ -9,6 +9,9 @@ import { productAdmRoute } from './routes/product-adm.route';
 import TransactionModel from '../../modules/payment/repository/transaction.model';
 import { ProductInvoiceModel } from "../../modules/invoice/repository/product-invoice.model";
 import { invoiceRoute } from "./routes/invoice.route";
+import { ProductCatalogModel} from "../../modules/store-catalog/repository/product.model";
+
+
 
 
 export const app: Express = express();
@@ -25,7 +28,7 @@ async function setupDb() {
     storage: ":memory:",
     logging: false,
   });
-  await sequelize.addModels([ProductModel, ClientModel, InvoiceModel, TransactionModel, ProductInvoiceModel]);
+  await sequelize.addModels([ProductModel, ClientModel, ProductCatalogModel, TransactionModel,InvoiceModel, ProductInvoiceModel]);
   await sequelize.sync();
 }
 setupDb();

@@ -195,9 +195,8 @@ describe("PlaceOrderUseCase unit test",()=>{
                 generateInvoice: jest.fn().mockResolvedValue({id: "1i"}),
             };
 
-            const placeOrderUseCase = new PlaceOrderUseCase(
+            const placeOrderUseCase = new PlaceOrderUseCase(null,
                 mockClientFacade as any,
-                null,
                 null,
                 mockCheckoutRepository as any,
                 mockInvoiceFacade as any,

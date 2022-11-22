@@ -11,7 +11,7 @@ import Invoice from '../domain/entity/invoice';
 
   
   @Table({
-    tableName: "products",
+    tableName: "productsInvoice",
     timestamps: false,
   })
   export class ProductInvoiceModel extends Model {

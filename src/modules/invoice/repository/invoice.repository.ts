@@ -1,10 +1,10 @@
 import Invoice from '../domain/entity/invoice';
 import { InvoiceModel } from './invoice.model';
-import { ProductModel } from './product-invoice.model';
 import InvoiceGateway from '../gateway/invoice.gateway';
 import Id from '../../@shared/domain/value-object/id.value-object';
 import Product from '../domain/entity/product';
 import Address from '../domain/value-object/address.value-object';
+import { ProductInvoiceModel } from './product-invoice.model';
 export default class InvoiceRepository implements InvoiceGateway{
     async generate(entity: Invoice): Promise<void> {
 
@@ -28,7 +28,7 @@ export default class InvoiceRepository implements InvoiceGateway{
             })),
           },
           {
-            include: [{ model: ProductModel }],
+            include: [{ model: ProductInvoiceModel }],
           }
         );
     }
