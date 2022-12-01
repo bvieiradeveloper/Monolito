@@ -86,5 +86,8 @@ describe("E2E test for checkout", () => {
       },
     );
 
+    expect(order.body.total).toBe(300);
+    expect(order.body.products).toStrictEqual([{productId: "1"}, {productId: "2"}]);
+
   });
 });
